@@ -73,6 +73,7 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 plugins=(asdf)
 plugins=(nvm)
+plugins=(docker)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,7 +114,11 @@ eval "$(rbenv init - zsh)"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Docker setup
 source /Users/alvincrespo/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+# Python Setup
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
