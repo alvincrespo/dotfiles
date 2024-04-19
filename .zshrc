@@ -122,3 +122,9 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+# Enables running rake tasks like so:
+# rake tweets:send[cpytel]
+#
+# ref: https://thoughtbot.com/blog/how-to-use-arguments-in-a-rake-task
+unsetopt nomatch
