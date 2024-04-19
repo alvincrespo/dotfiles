@@ -70,10 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-plugins=(asdf)
-plugins=(nvm)
-plugins=(docker)
+plugins=(git nvm docker rbenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -108,11 +105,6 @@ source $ZSH/oh-my-zsh.sh
 export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
-
-eval "$(rbenv init - zsh)"
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Docker setup
 source /Users/alvincrespo/.docker/init-zsh.sh || true # Added by Docker Desktop
