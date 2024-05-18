@@ -100,6 +100,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias r_tasks="bundle exec rails --tasks"
+
 # NOTE: Resolves building ruby on M1
 # ref: https://github.com/rbenv/ruby-build/issues/1691#issuecomment-846429455
 export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
