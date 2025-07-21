@@ -121,6 +121,48 @@ eval "$(pyenv virtualenv-init -)"
 # ref: https://thoughtbot.com/blog/how-to-use-arguments-in-a-rake-task
 unsetopt nomatch
 
+# ------------------------------------------------------------------------------------------------------------------------
+# Node Version Manager (NVM) Configuration
+# Sets up NVM environment and loads NVM functionality for managing Node.js versions
+#
+# - NVM_DIR: Defines the NVM installation directory
+# - Loads nvm.sh script if it exists to enable nvm commands
+# - Loads bash completion for nvm if available for enhanced command-line experience
+# - Adds local user binaries directory to PATH for locally installed executables
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="$HOME/.local/bin:$PATH"
+# ------------------------------------------------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------------------------------------------------
+# Hook function that automatically manages Node.js versions when changing directories.
+# This function checks for a .node-version file in the current directory and:
+# - Installs the specified Node version if it's not available locally
+# - Switches to the specified Node version if it differs from the current version
+# - Reverts to the default Node version when leaving a directory with version requirements
+#
+# The hook is triggered on directory changes (chpwd) and runs once on shell startup.
+# Requires nvm (Node Version Manager) to be installed and configured.
+autoload -U add-zsh-hook
+
+load-node-version() {
+  local node_version=".node-version"
+
+  if [[ -f "$node_version" ]]; then
+    nvmrc_node_version=$(nvm version "$(cat "$node_version")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use "$(cat "$node_version")"
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+add-zsh-hook chpwd load-node-version
+load-node-version
+# ------------------------------------------------------------------------------------------------------------------------
